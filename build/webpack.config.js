@@ -4,10 +4,10 @@ const webpack = require('webpack');
 const serverConfig = require('./server.config');
 
 var entry = {
-    app: [path.join(__dirname, '../src/app')]
+    chuncai: [path.join(__dirname, '../src/chuncai')]
 };
 if (process.env.NODE_ENV === 'dev') {
-    entry.app.push(`webpack-dev-server/client?http://${serverConfig.domain}:${serverConfig.port}`);
+    entry.chuncai.push(`webpack-dev-server/client?http://${serverConfig.domain}:${serverConfig.port}`);
 }
 
 module.exports = {
@@ -52,12 +52,12 @@ module.exports = {
             test: /\.css$/,
             use: ['style-loader', 'css-loader']
         }, {
-            test: /\.jsx?$/,
+            test: /\.js$/,
             exclude: /node_modules/,
             use: ['babel-loader']
         }, {
-            test: /\.less$/,
-            use: ['style-loader', 'css-loader', 'less-loader']
+            test: /\.scss$/,
+            use: ['style-loader', 'css-loader', 'sass-loader']
         }, {
             test: /\.(png|jpg)$/,
             use: ['url-loader']
@@ -66,7 +66,7 @@ module.exports = {
     //其它解决方案配置
     resolve: {
         // root: path.join(__dirname, 'src'),
-        extensions: ['.js', '.jsx', '.json', '.less'],
+        extensions: ['.js', '.jsx', '.json', '.scss'],
         alias: { // 设置别名
 
         }
@@ -77,8 +77,5 @@ module.exports = {
         port: 9000
     },
     externals: {
-        // 'react': 'React',
-        // 'react-dom': 'ReactDOM',
-        // 'jQuery': 'jQuery'
     }
 };
