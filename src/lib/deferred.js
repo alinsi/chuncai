@@ -7,6 +7,7 @@
 export default function deferred() {
     let queue = [];  // 回调对列
     let statu = 0;   // 0-pending 1-fulfilled
+    let disabled = false;  // 是否禁用
     let invoking = false;  // 正在出列
 
     /**
@@ -25,6 +26,8 @@ export default function deferred() {
      * 出列
      */
     function next() {
+        // 如果禁用
+        if (disabled) return;
 
         // 出列完毕
         if (!queue.length) {
@@ -79,10 +82,17 @@ export default function deferred() {
      * 改变 deferred 状态
      */
     dfd.resolve = function () {
+        if (statu === 1) return this;
         statu = 1;
         next();
         return this;
     };
 
+    /**
+     * 禁用
+     */
+    dfd.disable = function () {
+        disabled = true;
+    }
     return dfd;
 }

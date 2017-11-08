@@ -8,5 +8,21 @@ let requestAnimationFrame = window.requestAnimationFrame
             fn();
         }, 17);
     };
-
-let queue = [];
+/**
+ * 帧动画循环调用某个函数
+ * 
+ * @export
+ * @param {function} fn 
+ * @param {deferred} dfd 
+ * @returns 
+ */
+export function invokeCalling(fn, dfd) {
+    let goon = true;
+    dfd.then(() => goon = false);
+    (function invokeRequestAnimationFrame() {
+        if (!goon) return;
+        fn();
+        invokeRequestAnimationFrame();
+    })();
+    return dfd;
+}
