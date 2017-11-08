@@ -13,7 +13,3 @@ class Chuncai {
 
     }
 }
-
-animate(0, 100, 3000, function (n) {
-    console.log(n);
-});
