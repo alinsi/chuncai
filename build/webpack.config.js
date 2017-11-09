@@ -6,8 +6,24 @@ const serverConfig = require('./server.config');
 var entry = {
     chuncai: [path.join(__dirname, '../src/chuncai')]
 };
+
+let plugins = [];
+
 if (process.env.NODE_ENV === 'dev') {
     entry.chuncai.push(`webpack-dev-server/client?http://${serverConfig.domain}:${serverConfig.port}`);
+} else if (false) {
+    plugins.push(new webpack.optimize.UglifyJsPlugin({
+        minimize: true,
+        sourceMap: false,
+        beautify: false,
+        output: {
+            comments: false
+        },
+        compress: {
+            warnings: false,
+            screw_ie8: false
+        }
+    }));
 }
 
 module.exports = {
@@ -18,34 +34,12 @@ module.exports = {
     output: {
         path: path.join(__dirname, '../dist'),
         filename: '[name].js',
-        publicPath: '/dist/'
+        publicPath: '/dist/',
+        // library: 'chuncai',
+        libraryTarget: 'umd'
     },
     //插件项
-    plugins: [
-        // new webpack.optimize.CommonsChunkPlugin('common.js'),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     minimize: true,
-        //     sourceMap: true,
-        //     beautify: false,
-        //     output: {
-        //         comments: false
-        //     },
-        //     compress: {
-        //         warnings: false,
-        //         screw_ie8: true
-        //     }
-        // }),
-        // new webpack.HotModuleReplacementPlugin(),  // HMR
-        // noErrorsPlugin,
-        new webpack.NoEmitOnErrorsPlugin(),
-        // new webpack.DefinePlugin({ // <-- 减少 React 大小的关键
-        //     'process.env': {
-        //         'NODE_ENV': JSON.stringify('production')
-        //     },
-        //     '__DEV__': false
-        // }),
-        new webpack.optimize.AggressiveMergingPlugin()//合并块
-    ],
+    plugins: plugins,
     module: {
         //加载器配置
         rules: [{
@@ -57,7 +51,14 @@ module.exports = {
             use: ['babel-loader']
         }, {
             test: /\.scss$/,
-            use: ['style-loader', 'css-loader', 'sass-loader']
+            use: ['style-loader',
+                {
+                    loader: 'css-loader',
+                    options: {
+                        minimize: true
+                    }
+                },
+                'postcss-loader', 'sass-loader']
         }, {
             test: /\.(png|jpg)$/,
             use: ['url-loader']
