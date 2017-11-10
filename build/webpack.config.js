@@ -3,13 +3,15 @@ const webpack = require('webpack');
 
 const serverConfig = require('./server.config');
 
+const ifDev = process.env.NODE_ENV === 'dev';
+
 var entry = {
-    chuncai: [path.join(__dirname, '../src/chuncai')]
+    chuncai: [path.join(__dirname, `../src/${ifDev ? 'index' : 'chuncai'}`)]
 };
 
 let plugins = [];
 
-if (process.env.NODE_ENV === 'dev') {
+if (ifDev) {
     entry.chuncai.push(`webpack-dev-server/client?http://${serverConfig.domain}:${serverConfig.port}`);
 } else if (false) {
     plugins.push(new webpack.optimize.UglifyJsPlugin({
@@ -35,7 +37,7 @@ module.exports = {
         path: path.join(__dirname, '../dist'),
         filename: '[name].js',
         publicPath: '/dist/',
-        // library: 'chuncai',
+        library: 'chuncai',
         libraryTarget: 'umd'
     },
     //插件项

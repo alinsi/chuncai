@@ -16,6 +16,6 @@ export function getStorage() {
  * @param {any} config 
  */
 export function saveStorage(config) {
-    let content = JSON.parse(config);
+    let content = JSON.stringify(config);
     sessionStorage[key] = content;
 }

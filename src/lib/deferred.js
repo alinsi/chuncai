@@ -1,3 +1,5 @@
+import { getType } from './utils';
+
 /**
  * 工厂方法，返回 类deferred 异步对象
  * 
@@ -9,18 +11,6 @@ export default function deferred() {
     let statu = 0;   // 0-pending 1-fulfilled
     let disabled = false;  // 是否禁用
     let invoking = false;  // 正在出列
-
-    /**
-     * 获取参数类型
-     * 
-     * @param {any} sender 要确定类型的参数
-     * @returns {string}
-     */
-    function getType(sender) {
-        return sender === null ?
-            (sender + '') :
-            Object.prototype.toString.call(sender).match(/\s(\S+?)\]$/)[1].toLowerCase();
-    }
 
     /**
      * 出列
