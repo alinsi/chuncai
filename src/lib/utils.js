@@ -98,3 +98,41 @@ export function drag(targetNode, dragNode, callback) {
     });
 }
 //#endregion
+
+/**
+ * 遍历(伪)数组，或对象
+ * 
+ * @param {any} sender
+ * @param {function} callback
+ */
+export function each(sender, callback) {
+    let i = 0,                      // 循环用变量
+        len = sender.length,           // 长度
+        arrayLike = arrayLike(sender), // 是否属于(类)数组
+        result;        // 回调的结果
+
+    if (arrayLike) {
+        for (; i < len; i++) {
+            result = callback.call(sender[i], i, sender[i]);
+            // true 的时候continue 省略
+            if (result === false) break;
+        }
+    } else {
+        for (i in sender) {
+            result = callback.call(sender[i], i, sender[i]);
+            // true 的时候continue 省略
+            if (result === false) break;
+        }
+    }
+}
+
+/**
+ * 检测是否属于(伪)数组
+ * 
+ * @param {any} sender
+ * @returns {boolean}
+ */
+export function arrayLike(sender) {
+    // duck typing ，检测是否属于数组
+    return getType(sender.length) == 'number' && getType(sender.splice) == 'function';
+}

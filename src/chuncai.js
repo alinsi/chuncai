@@ -1,16 +1,21 @@
 import deferred from './lib/deferred';
 import * as storage from './lib/storage';
-// import animate from './lib/animate';
+import animate from './lib/animate';
 // import * as _ from './lib/utils';
 
-import { drag, throttle } from './lib/utils';
+import * as _ from './lib/utils';
 
 import './chuncai.scss';
 import { saveStorage } from './lib/storage';
 
+/**
+ * 用于生产老婆的类，只能用于单例
+ * 
+ * @class Chuncai
+ */
 class Chuncai {
     constructor() {
-        // console.log('lalla');
+
     }
     /**
      * 初始化
@@ -30,7 +35,7 @@ class Chuncai {
     _fillDom() {
         let wrap = document.createElement('div');
 
-        let tagContent = '<a class="chuncai-zhaohuan" href="javascript:;">召唤春菜</a>';
+        let tagContent = '<a id="chuncai_zhaohuan" class="chuncai-zhaohuan" href="javascript:;">召唤春菜</a>';
         wrap.innerHTML = tagContent;
         let tagNode = wrap.children[0];
         document.body.appendChild(tagNode);
@@ -61,10 +66,7 @@ class Chuncai {
         // 春菜身体，可拖动
         let targetNode = document.getElementById('chuncai_body');
         // 可拖动，并节流保存位置
-        drag(targetNode, dragNode, throttle((pos) => {
-            saveStorage(pos);
-            console.log(pos);
-        }, 300));
+        _.drag(targetNode, dragNode, _.throttle(saveStorage, 300));
     }
 
     /**
@@ -77,15 +79,14 @@ class Chuncai {
         if (this._sayWordDfd) {
             this._sayWordDfd.disable();
         }
-        this._sayWordDfd = deferred();
-        let delay = 600;
+        this._sayWordDfd = deferred().resolve();
+        let delay = 80;
         let eleNode = document.getElementById('chuncai_word');
         for (let i = 0, len = content.length; i < len; i++) {
             this._sayWordDfd.then(() => {
-                eleNode.innerHTML = content.substr(0, len);
+                eleNode.innerHTML = content.substr(0, i + 1);
             }).delay(delay);
         }
-        this._sayWordDfd.resolve();
     }
 
     /**
@@ -101,7 +102,20 @@ class Chuncai {
             eleNode.style.top = pos.y + 'px';
         }
 
-        this._sayWord('fdjsafjdsafjlkajfdksafjsdfjaldsf');
+        this._sayWord('一起组团烧烤秋刀鱼');
+    }
+
+    hide() {
+        this._sayWord('记得叫我出来哦~');
+        let eleNode = document.getElementById('chuncai_main');
+        let tipNode = document.getElementById('chuncai_zhaohuan');
+        let dfd = deferred().resovle();
+        dfd.delay(1000).then(() => {
+            animate(1, 0, 1000, n => {
+                eleNode.style.opacity = n;
+                tipNode.style.opacity = 1 - n;
+            });
+        });
     }
 }
 
