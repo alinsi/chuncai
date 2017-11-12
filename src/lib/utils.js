@@ -106,10 +106,10 @@ export function drag(targetNode, dragNode, callback) {
  * @param {function} callback
  */
 export function each(sender, callback) {
-    let i = 0,                      // 循环用变量
-        len = sender.length,           // 长度
-        arrayLike = arrayLike(sender), // 是否属于(类)数组
-        result;        // 回调的结果
+    let i = 0;                      // 循环用变量
+    let len = sender.length;           // 长度
+    let arrayLike = arrayLike(sender); // 是否属于(类)数组
+    let result;        // 回调的结果
 
     if (arrayLike) {
         for (; i < len; i++) {
