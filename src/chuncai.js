@@ -66,7 +66,7 @@ class Chuncai {
         // 春菜身体，可拖动
         let targetNode = document.getElementById('chuncai_body');
         // 可拖动，并节流保存位置
-        _.drag(targetNode, dragNode, _.throttle(saveStorage, 300));
+        _.drag(targetNode, dragNode, _.debounce(saveStorage, 300));
     }
 
     /**
