@@ -17,6 +17,7 @@ class Chuncai {
     constructor() {
 
     }
+    //#region private methods
     /**
      * 初始化
      * 
@@ -88,6 +89,7 @@ class Chuncai {
             }).delay(delay);
         }
     }
+    //#endregion
 
     /**
      * 显示春菜
