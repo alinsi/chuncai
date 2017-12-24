@@ -91,6 +91,7 @@ class Chuncai {
     }
     //#endregion
 
+    //#region public methods
     /**
      * 显示春菜
      * 
@@ -124,6 +125,7 @@ class Chuncai {
             });
         });
     }
+    //#endregion
 }
 
 export default new Chuncai();
