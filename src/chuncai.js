@@ -104,7 +104,12 @@ class Chuncai {
 
         this._sayWord('一起组团烧烤秋刀鱼');
     }
-
+    
+    /**
+     * 隐藏
+     * 
+     * @memberof Chuncai
+     */
     hide() {
         this._sayWord('记得叫我出来哦~');
         let eleNode = document.getElementById('chuncai_main');
