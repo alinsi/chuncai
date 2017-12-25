@@ -136,3 +136,14 @@ export function arrayLike(sender) {
     // duck typing ，检测是否属于数组
     return getType(sender.length) == 'number' && getType(sender.splice) == 'function';
 }
+
+/**
+ * 获取随机数 int
+ * 
+ * @export
+ * @param {number} maxNum 
+ * @returns 
+ */
+export function randomInt(maxNum) {
+    return ~~(Math.random() * maxNum);
+}

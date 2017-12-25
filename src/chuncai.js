@@ -1,7 +1,6 @@
 import deferred from './lib/deferred';
 import * as storage from './lib/storage';
 import animate from './lib/animate';
-// import * as _ from './lib/utils';
 
 import * as _ from './lib/utils';
 
@@ -18,12 +17,15 @@ class Chuncai {
 
     }
     //#region private methods
+
     /**
      * 初始化
      * 
+     * @param {any} opt 
      * @memberof Chuncai
      */
-    init() {
+    init(opt) {
+        this.opt = opt;
         this._fillDom();
         this._evtSet();
         this.show();
@@ -66,8 +68,9 @@ class Chuncai {
         let dragNode = document.getElementById('chuncai_main');
         // 春菜身体，可拖动
         let targetNode = document.getElementById('chuncai_body');
-        // 可拖动，并节流保存位置
+        // 可拖动，并防抖保存位置
         _.drag(targetNode, dragNode, _.debounce(saveStorage, 300));
+
     }
 
     /**
@@ -76,18 +79,26 @@ class Chuncai {
      * @param {string} content 
      * @memberof Chuncai
      */
-    _sayWord(content) {
-        if (this._sayWordDfd) {
-            this._sayWordDfd.disable();
+    freeSay(content) {
+        if (this.freeSayDfd) {
+            this.freeSayDfd.disable();
         }
-        this._sayWordDfd = deferred().resolve();
+        this.freeSayDfd = deferred().resolve();
         let delay = 80;
         let eleNode = document.getElementById('chuncai_word');
         for (let i = 0, len = content.length; i < len; i++) {
-            this._sayWordDfd.then(() => {
+            this.freeSayDfd.then(() => {
                 eleNode.innerHTML = content.substr(0, i + 1);
             }).delay(delay);
         }
+    }
+
+    _showMenu() {
+
+    }
+
+    _hideMenu() {
+
     }
     //#endregion
 
@@ -105,16 +116,16 @@ class Chuncai {
             eleNode.style.top = pos.y + 'px';
         }
 
-        this._sayWord('一起组团烧烤秋刀鱼');
+        this.freeSay('一起组团烧烤秋刀鱼');
     }
-    
+
     /**
      * 隐藏
      * 
      * @memberof Chuncai
      */
     hide() {
-        this._sayWord('记得叫我出来哦~');
+        this.freeSay('记得叫我出来哦~');
         let eleNode = document.getElementById('chuncai_main');
         let tipNode = document.getElementById('chuncai_zhaohuan');
         let dfd = deferred().resovle();
