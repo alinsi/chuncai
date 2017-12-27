@@ -74,19 +74,16 @@ class Chuncai {
         }
 
         let menuArr = [];
-        let itemlen = 0;
         _.each(menu, key => {
             if (key == '$title') {
                 return true;
             }
-            itemlen++;
             let tempArr = this.subMenus.slice();
             tempArr.push(key);
             menuArr.push(`<span class="cc-cmd" data-cccmd="${tempArr.join('__')}">${key}</span>`);
         });
         let eleMenu = document.getElementsByClassName('chuncai-menu')[0];
         eleMenu.innerHTML = menuArr.join('');
-        eleMenu.setAttribute('data-itemlen', itemlen);
     }
 
     /**
