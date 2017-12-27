@@ -14,7 +14,9 @@ import { saveStorage } from './lib/storage';
  */
 class Chuncai {
     constructor() {
-
+        this.opt = null; // 初始化参数
+        this.subMenus = []; // 当前所有展开菜单
+        this.menuOn = false; // 菜单是否展开
     }
     //#region private methods
 
@@ -27,6 +29,7 @@ class Chuncai {
     init(opt) {
         this.opt = opt;
         this._fillDom();
+        this._fillMenu();
         this._evtSet();
         this.show();
     }
@@ -58,6 +61,34 @@ class Chuncai {
         let mainNode = wrap.children[0];
         document.body.appendChild(mainNode);
     }
+
+    /**
+     * 填充菜单
+     * 
+     * @memberof Chuncai
+     */
+    _fillMenu() {
+        var menu = this.opt.menu;
+        for (let i = 0, len = this.subMenus.length; i < len; i++) {
+            menu = menu[this.subMenus[i]];
+        }
+
+        let menuArr = [];
+        let itemlen = 0;
+        _.each(menu, key => {
+            if (key == '$title') {
+                return true;
+            }
+            itemlen++;
+            let tempArr = this.subMenus.slice();
+            tempArr.push(key);
+            menuArr.push(`<span class="cc-cmd" data-cccmd="${tempArr.join('__')}">${key}</span>`);
+        });
+        let eleMenu = document.getElementsByClassName('chuncai-menu')[0];
+        eleMenu.innerHTML = menuArr.join('');
+        eleMenu.setAttribute('data-itemlen', itemlen);
+    }
+
     /**
      * 事件绑定
      * 
@@ -72,6 +103,17 @@ class Chuncai {
         _.drag(targetNode, dragNode, _.debounce(saveStorage, 300));
 
     }
+
+    _showMenu() {
+
+    }
+
+    _hideMenu() {
+
+    }
+    //#endregion
+
+    //#region public methods
 
     /**
      * 渐显文字
@@ -93,16 +135,6 @@ class Chuncai {
         }
     }
 
-    _showMenu() {
-
-    }
-
-    _hideMenu() {
-
-    }
-    //#endregion
-
-    //#region public methods
     /**
      * 显示春菜
      * 

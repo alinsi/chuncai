@@ -80,8 +80,8 @@
         }
 
         > .chuncai-menu {
-            display: none;
-            > a {
+            // display: none;
+            > span.cc-cmd {
                 cursor: pointer;
                 display: inline-block;
                 width: 50%;

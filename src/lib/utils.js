@@ -108,10 +108,10 @@ export function drag(targetNode, dragNode, callback) {
 export function each(sender, callback) {
     let i = 0;                      // 循环用变量
     let len = sender.length;           // 长度
-    let arrayLike = arrayLike(sender); // 是否属于(类)数组
+    let ifArrayLike = arrayLike(sender); // 是否属于(类)数组
     let result;        // 回调的结果
 
-    if (arrayLike) {
+    if (ifArrayLike) {
         for (; i < len; i++) {
             result = callback.call(sender[i], i, sender[i]);
             // true 的时候continue 省略
