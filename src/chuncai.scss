@@ -80,7 +80,8 @@
         }
 
         > .chuncai-menu {
-            // display: none;
+            display: none;
+            overflow: hidden;
             > span.cc-cmd {
                 cursor: pointer;
                 display: inline-block;

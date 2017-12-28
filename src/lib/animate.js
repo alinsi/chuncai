@@ -33,3 +33,72 @@ export default function animate(from, to, duration, stepFn) {
         requestAnimationFrame(invokeAnimate);
     })();
 }
+/**
+ * 向上收起
+ * 
+ * @export
+ * @param {HTMLElement} eleNode 
+ * @param {number} duration
+ * @param {function} callback 
+ */
+export function slideUp(eleNode, duration, callback) {
+    let from = eleNode.offsetHeight;
+    animate(from, 0, duration, num => {
+        eleNode.style.height = num + 'px';
+        if (num == 0) {
+            eleNode.style.height = 'auto';
+            eleNode.style.display = 'none';
+            callback();
+        }
+    });
+}
+/**
+ * 向下展开
+ * 
+ * @export
+ * @param {HTMLElement} eleNode 
+ * @param {number} duration 
+ * @param {function} callback 
+ */
+export function slideDown(eleNode, duration, callback) {
+    eleNode.style.display = 'block';
+    let to = eleNode.offsetHeight;
+    animate(0, to, duration, num => {
+        eleNode.style.height = num + 'px';
+        if (num == to) {
+            callback();
+        }
+    });
+}
+/**
+ * 渐隐，淡出
+ * 
+ * @export
+ * @param {HTMLElement} eleNode 
+ * @param {number} duration 
+ * @param {function} callback 
+ */
+export function fadeOut(eleNode, duration, callback) {
+    animate(1, 0, duration, num => {
+        eleNode.style.opacity = num;
+        if (num == 0) {
+            callback && callback();
+        }
+    });
+}
+/**
+ * 渐现，淡入
+ * 
+ * @export
+ * @param {HTMLElement} eleNode 
+ * @param {number} duration 
+ * @param {function} callback 
+ */
+export function fadeIn(eleNode, duration, callback) {
+    animate(0, 1, duration, num => {
+        eleNode.style.opacity = num;
+        if (num == 1) {
+            callback && callback();
+        }
+    });
+}

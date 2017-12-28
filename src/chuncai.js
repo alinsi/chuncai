@@ -1,6 +1,6 @@
 import deferred from './lib/deferred';
 import * as storage from './lib/storage';
-import animate from './lib/animate';
+import { slideUp, slideDown, fadeIn, fadeOut } from './lib/animate';
 
 import * as _ from './lib/utils';
 
@@ -99,18 +99,103 @@ class Chuncai {
         // 可拖动，并防抖保存位置
         _.drag(targetNode, dragNode, _.debounce(saveStorage, 300));
 
+        // 菜单
+        document.getElementsByClassName('chuncai-menu-btn')[0].addEventListener('click', () => {
+            this.toggleMenu();
+        });
     }
 
+    /**
+     * 选择某一项
+     * 
+     * @param {string} cccmd 
+     * @memberof Chuncai
+     */
+    _choseItem(cccmd) {
+        let cmds = cccmd.split('__');
+        let item = this.opt.menu; // 标签对应的指令项
+        for (let i = 0, len = cmds.length; i < len; i++) {
+            item = item[cmds[i]];
+        }
+
+        let actionDict = {
+            /**
+             * 字符串则直接输出
+             * 
+             * @param {string} content 
+             */
+            string: content => {
+                this.freeSay(content);
+            },
+            /**
+             * 方法直接调用
+             * 
+             * @param {function} func 
+             */
+            function: func => func(),
+            /**
+             * 菜单则填充
+             * 
+             * @param {any} sender 
+             */
+            object: sender => {
+
+            }
+        };
+    }
+
+    /**
+     * 显示菜单
+     * 
+     * @returns 
+     * @memberof Chuncai
+     */
     _showMenu() {
-
+        let dfd = deferred();
+        let menuNode = document.getElementsByClassName('chuncai-menu')[0];
+        if (this.menuOn) {
+            dfd.resolve();
+        }
+        else {
+            slideDown(menuNode, 160, () => {
+                this.menuOn = true;
+                dfd.resolve();
+            });
+        }
+        return dfd;
     }
 
+    /**
+     * 隐藏菜单
+     * 
+     * @returns 
+     * @memberof Chuncai
+     */
     _hideMenu() {
-
+        let dfd = deferred();
+        let menuNode = document.getElementsByClassName('chuncai-menu')[0];
+        if (!this.menuOn) {
+            dfd.resolve();
+        }
+        else {
+            slideUp(menuNode, 160, () => {
+                this.menuOn = false;
+                dfd.resolve();
+            });
+        }
+        return dfd;
     }
     //#endregion
 
     //#region public methods
+
+    toggleMenu() {
+        if (this.menuOn) {
+            this._hideMenu();
+        } else {
+            this._showMenu();
+        }
+    }
 
     /**
      * 渐显文字
@@ -159,10 +244,12 @@ class Chuncai {
         let tipNode = document.getElementById('chuncai_zhaohuan');
         let dfd = deferred().resovle();
         dfd.delay(1000).then(() => {
-            animate(1, 0, 1000, n => {
-                eleNode.style.opacity = n;
-                tipNode.style.opacity = 1 - n;
-            });
+            // animate(1, 0, 1000, n => {
+            //     eleNode.style.opacity = n;
+            //     tipNode.style.opacity = 1 - n;
+            // });
+            fadeOut(eleNode, 1000);
+            fadeIn(tipNode, 1000);
         });
     }
     //#endregion
