@@ -65,12 +65,13 @@ class Chuncai {
     /**
      * 填充菜单
      * 
+     * @param {Array<string>} [subMenus=[]]  
      * @memberof Chuncai
      */
-    _fillMenu() {
+    _fillMenu(subMenus = []) {
         var menu = this.opt.menu;
-        for (let i = 0, len = this.subMenus.length; i < len; i++) {
-            menu = menu[this.subMenus[i]];
+        for (let i = 0, len = subMenus.length; i < len; i++) {
+            menu = menu[subMenus[i]];
         }
 
         let menuArr = [];
@@ -78,7 +79,7 @@ class Chuncai {
             if (key == '$title') {
                 return true;
             }
-            let tempArr = this.subMenus.slice();
+            let tempArr = subMenus.slice();
             tempArr.push(key);
             menuArr.push(`<span class="cc-cmd" data-cccmd="${tempArr.join('__')}">${key}</span>`);
         });
@@ -103,15 +104,25 @@ class Chuncai {
         document.getElementsByClassName('chuncai-menu-btn')[0].addEventListener('click', () => {
             this.toggleMenu();
         });
+
+        // 点击菜单项
+        document.getElementsByClassName('chuncai-menu')[0].addEventListener('click', ex => {
+            let ele = ex.target;
+            if (!~ele.className.indexOf('cc-cmd')) {
+                return;
+            }
+            let cccmd = ele.getAttribute('data-cccmd');
+            this._choseItem(cccmd);
+        }, true);
     }
 
     /**
      * 选择某一项
      * 
-     * @param {string} cccmd 
+     * @param {string} [cccmd=''] 
      * @memberof Chuncai
      */
-    _choseItem(cccmd) {
+    _choseItem(cccmd = '') {
         let cmds = cccmd.split('__');
         let item = this.opt.menu; // 标签对应的指令项
         for (let i = 0, len = cmds.length; i < len; i++) {
@@ -126,6 +137,10 @@ class Chuncai {
              */
             string: content => {
                 this.freeSay(content);
+                this._hideMenu()
+                    .then(() => {
+                        this._fillMenu();
+                    });
             },
             /**
              * 方法直接调用
@@ -136,12 +151,18 @@ class Chuncai {
             /**
              * 菜单则填充
              * 
-             * @param {any} sender 
              */
-            object: sender => {
-
+            object: () => {
+                this._hideMenu()
+                    .then(() => {
+                        this._fillMenu(cmds);
+                        this._showMenu();
+                    });
             }
         };
+
+        let itemType = _.getType(item);
+        actionDict[itemType] && actionDict[itemType](item);
     }
 
     /**
@@ -180,6 +201,7 @@ class Chuncai {
         else {
             slideUp(menuNode, 160, () => {
                 this.menuOn = false;
+                this._fillMenu();
                 dfd.resolve();
             });
         }

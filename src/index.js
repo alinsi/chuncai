@@ -6,9 +6,7 @@ var opt = {
         '关于春菜': function () {
             window.open('https://github.com/shalldie/chuncai');
         },
-        '存活时间': function () {
-            chuncai.freeSay('咱已经和主人共同度过了 ' + Math.floor((+new Date - 1456998485780) / (1000 * 60 * 60 * 24)) + "天 的人生了哦~   我是不是很棒呢~");
-        },
+        '存活时间': '咱已经和主人共同度过了 ' + Math.floor((+new Date - 1456998485780) / (1000 * 60 * 60 * 24)) + '天 的人生了哦~   我是不是很棒呢~',
         '拍打喂食': {
             $title: '要来点什么呢？',
             '小饼干': '嗷呜~ 多谢款待  >ω<',
