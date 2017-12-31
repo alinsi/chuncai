@@ -114,6 +114,10 @@ class Chuncai {
             let cccmd = ele.getAttribute('data-cccmd');
             this._choseItem(cccmd);
         }, true);
+
+        document.getElementById('chuncai_zhaohuan').addEventListener('click', () => {
+            this.show();
+        });
     }
 
     /**
@@ -178,7 +182,7 @@ class Chuncai {
             dfd.resolve();
         }
         else {
-            slideDown(menuNode, 160, () => {
+            slideDown(menuNode, 200, () => {
                 this.menuOn = true;
                 dfd.resolve();
             });
@@ -199,13 +203,33 @@ class Chuncai {
             dfd.resolve();
         }
         else {
-            slideUp(menuNode, 160, () => {
+            slideUp(menuNode, 200, () => {
                 this.menuOn = false;
                 this._fillMenu();
                 dfd.resolve();
             });
         }
         return dfd;
+    }
+
+    /**
+     * 随机卖萌
+     * 
+     * @param {boolean} rightNow 
+     * @memberof Chuncai
+     */
+    _rndMoe(rightNow) {
+        this._stopRndMoe();
+        let fn = () => {
+            let rnd = _.randomInt(this.opt.words.length);
+            this.freeSay(this.opt.words[rnd]);
+        };
+        this.rndMoeInterval = setInterval(fn, 5000);
+        rightNow && fn();
+    }
+
+    _stopRndMoe() {
+        clearInterval(this.rndMoeInterval);
     }
     //#endregion
 
@@ -247,12 +271,15 @@ class Chuncai {
     show() {
         let pos = storage.getStorage();
         let eleNode = document.getElementById('chuncai_main');
+        let tipNode = document.getElementById('chuncai_zhaohuan');
         if (pos.x !== undefined) {
             eleNode.style.left = pos.x + 'px';
             eleNode.style.top = pos.y + 'px';
         }
-
-        this.freeSay('一起组团烧烤秋刀鱼');
+        fadeOut(tipNode, 500);
+        fadeIn(eleNode, 500, () => {
+            this.freeSay('一起组团烧烤秋刀鱼');
+        });
     }
 
     /**
@@ -264,14 +291,14 @@ class Chuncai {
         this.freeSay('记得叫我出来哦~');
         let eleNode = document.getElementById('chuncai_main');
         let tipNode = document.getElementById('chuncai_zhaohuan');
-        let dfd = deferred().resovle();
+        let dfd = deferred().resolve();
         dfd.delay(1000).then(() => {
             // animate(1, 0, 1000, n => {
             //     eleNode.style.opacity = n;
             //     tipNode.style.opacity = 1 - n;
             // });
-            fadeOut(eleNode, 1000);
-            fadeIn(tipNode, 1000);
+            fadeOut(eleNode, 500);
+            fadeIn(tipNode, 500);
         });
     }
     //#endregion
