@@ -5,7 +5,7 @@ let requestAnimationFrame = window.requestAnimationFrame
     || window.webkitRequestAnimationFrame
     || function (fn) {
         setTimeout(function () {
-            fn();
+            fn(0);
         }, 17);
     };
 

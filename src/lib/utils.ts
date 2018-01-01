@@ -14,11 +14,11 @@ export function getType(sender) {
  * 函数防抖
  * 
  * @export
- * @param {function} fn 
- * @param {number} delay 
- * @returns {function}
+ * @param {Function} fn 
+ * @param {number} [delay=0] 
+ * @returns 
  */
-export function debounce(fn, delay) {
+export function debounce(fn, delay: number = 0) {
     let timer;
     return function (...args) {
         clearTimeout(timer);
@@ -106,7 +106,7 @@ export function drag(targetNode, dragNode, callback) {
  * @param {function} callback
  */
 export function each(sender, callback) {
-    let i = 0;                      // 循环用变量
+    let i: any = 0;                      // 循环用变量
     let len = sender.length;           // 长度
     let ifArrayLike = arrayLike(sender); // 是否属于(类)数组
     let result;        // 回调的结果
@@ -132,7 +132,7 @@ export function each(sender, callback) {
  * @param {any} sender
  * @returns {boolean}
  */
-export function arrayLike(sender) {
+export function arrayLike(sender: any) {
     // duck typing ，检测是否属于数组
     return getType(sender.length) == 'number' && getType(sender.splice) == 'function';
 }
@@ -144,6 +144,6 @@ export function arrayLike(sender) {
  * @param {number} maxNum 
  * @returns 
  */
-export function randomInt(maxNum) {
+export function randomInt(maxNum: number) {
     return ~~(Math.random() * maxNum);
 }
