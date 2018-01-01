@@ -250,6 +250,7 @@ class Chuncai {
      * @memberof Chuncai
      */
     freeSay(content) {
+        this._stopRndMoe();
         if (this.freeSayDfd) {
             this.freeSayDfd.disable();
         }
