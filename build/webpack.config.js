@@ -73,7 +73,7 @@ module.exports = {
     //其它解决方案配置
     resolve: {
         // root: path.join(__dirname, 'src'),
-        extensions: ['.ts', '.js', '.jsx', '.json', '.scss'],
+        extensions: ['.ts', '.js', '.json', '.scss'],
         alias: { // 设置别名
 
         }

@@ -4,6 +4,8 @@ import * as animate from './lib/animate';
 import * as _ from './lib/utils';
 import { saveStorage } from "./lib/storage";
 
+import './chuncai.scss';
+
 interface IOpt {
     menu: any;
     words: Array<string>
@@ -42,7 +44,7 @@ class Chuncai {
      * @memberof Chuncai
      */
     private get eleNodeWord() {
-        return document.getElementById('chuncai_word');
+        return <HTMLElement>document.getElementById('chuncai_word');
     }
 
     /**
@@ -53,7 +55,7 @@ class Chuncai {
      * @memberof Chuncai
      */
     private get eleNodeMain() {
-        return document.getElementById('chuncai_main');
+        return <HTMLElement>document.getElementById('chuncai_main');
     }
 
     /**
@@ -64,7 +66,7 @@ class Chuncai {
      * @memberof Chuncai
      */
     private get eleNodeBody() {
-        return document.getElementById('chuncai_body');
+        return <HTMLElement>document.getElementById('chuncai_body');
     }
 
     /**
@@ -75,7 +77,7 @@ class Chuncai {
      * @memberof Chuncai
      */
     private get eleNodeMenu() {
-        return document.getElementsByClassName('chuncai-menu')[0];
+        return <HTMLElement>document.getElementsByClassName('chuncai-menu')[0];
     }
 
     /**
@@ -86,7 +88,7 @@ class Chuncai {
      * @memberof Chuncai
      */
     private get eleNodeMenuBtn() {
-        return document.getElementsByClassName('chuncai-menu-btn')[0];
+        return <HTMLElement>document.getElementsByClassName('chuncai-menu-btn')[0];
     }
 
     /**
@@ -146,7 +148,7 @@ class Chuncai {
         }
 
         let menuArr = [];
-        _.each(menu, key => {
+        _.each(menu, (key, val) => {
             if (key == '$title') {
                 return true;
             }
@@ -170,7 +172,7 @@ class Chuncai {
         // 菜单
         this.eleNodeMenuBtn
             .addEventListener('click', () => {
-                // this.toggleMenu();
+                this.toggleMenu();
             });
 
         // 点击菜单项
@@ -181,7 +183,7 @@ class Chuncai {
                     return;
                 }
                 let cccmd = ele.getAttribute('data-cccmd') || '';
-                // this._choseItem(cccmd);
+                this.choseItem(cccmd);
             }, true);
 
         this.eleNodeZhaohuan
@@ -212,7 +214,7 @@ class Chuncai {
              */
             string: content => {
                 this.freeSay(content);
-                this._hideMenu()
+                this.hideMenu()
                     .then(() => {
                         this.fillMenu();
                     });
@@ -227,11 +229,14 @@ class Chuncai {
              * 菜单则填充
              * 
              */
-            object: () => {
-                this._hideMenu()
+            object: sender => {
+                this.hideMenu()
                     .then(() => {
-                        this._fillMenu(cmds);
-                        this._showMenu();
+                        this.fillMenu(cmds);
+                        this.showMenu();
+                        if (sender['$title']) {
+                            this.freeSay(sender['$title']);
+                        }
                     });
             }
         };
@@ -256,8 +261,19 @@ class Chuncai {
         for (let i = 0, len = content.length; i < len; i++) {
             this.freeSayDfd.then(() => {
                 this.eleNodeWord.innerHTML = content.substr(0, i + 1);
-            });
+            }).delay(80);
         }
+    }
+
+    /**
+     * 显示/隐藏 菜单
+     * 
+     * @private
+     * @returns {Deferred} 
+     * @memberof Chuncai
+     */
+    private toggleMenu(): Deferred {
+        return this.menuOn ? this.hideMenu() : this.showMenu();
     }
 
     /**
@@ -317,7 +333,7 @@ class Chuncai {
         this.fillDom();
         this.fillMenu();
         this.evtSet();
-
+        this.show();
     }
 
     /**
@@ -326,7 +342,30 @@ class Chuncai {
      * @memberof Chuncai
      */
     public show(): void {
+        let pos = storage.getStorage();
+        if (pos.x !== undefined) {
+            this.eleNodeMain.style.left = pos.x + 'px';
+            this.eleNodeMain.style.top = pos.y + 'px';
+        }
+        animate.fadeOut(this.eleNodeZhaohuan, 500);
+        animate.fadeIn(this.eleNodeMain, 500, () => {
+            this.freeSay('一起组团烧烤秋刀鱼');
+        });
+    }
 
+    /**
+     * 隐藏
+     * 
+     * @memberof Chuncai
+     */
+    public hide(): void {
+        this.freeSay('记得叫我出来哦~');
+        setTimeout(() => {
+            animate.fadeOut(this.eleNodeMain, 500);
+            animate.fadeIn(this.eleNodeZhaohuan, 500);
+        }, 1000);
     }
     //#endregion
 }
+
+export default new Chuncai();

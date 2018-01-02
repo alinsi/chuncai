@@ -1,11 +1,17 @@
 const key = 'chuncai';
+
+interface IPoint {
+    x: number,
+    y: number
+}
+
 /**
  * 获取sessionStorage中存储的信息
  * 
  * @export
- * @returns {any}
+ * @returns {IPoint}
  */
-export function getStorage() {
+export function getStorage(): IPoint {
     let content = sessionStorage[key] || '{}';
     return JSON.parse(content);
 }
@@ -15,7 +21,7 @@ export function getStorage() {
  * @export
  * @param {any} config 
  */
-export function saveStorage(config) {
+export function saveStorage(config: IPoint): void {
     let content = JSON.stringify(config);
     sessionStorage[key] = content;
 }

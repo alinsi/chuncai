@@ -68,7 +68,7 @@ export default class Deferred {
             this.next();
         }
         else if (itemType == 'number') {
-            setTimeout(function () {
+            setTimeout(() => {
                 this.next();
             }, <number>item);
         }

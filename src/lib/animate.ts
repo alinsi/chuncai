@@ -16,7 +16,7 @@ let requestAnimationFrame = window.requestAnimationFrame
  * @param {number} from 起始值
  * @param {number} to 目标值
  * @param {number} duration 持续时间
- * @param {function} stepFn 每次变化执行的回调
+ * @param {Function} stepFn 每次变化执行的回调
  */
 export default function animate(from, to, duration, stepFn) {
     let startTime = +new Date;  // 动画开始时间
@@ -39,7 +39,7 @@ export default function animate(from, to, duration, stepFn) {
  * @export
  * @param {HTMLElement} eleNode 
  * @param {number} duration
- * @param {function} callback 
+ * @param {Function} callback 
  */
 export function slideUp(eleNode, duration, callback) {
     let from = eleNode.offsetHeight;
@@ -58,9 +58,9 @@ export function slideUp(eleNode, duration, callback) {
  * @export
  * @param {HTMLElement} eleNode 
  * @param {number} duration 
- * @param {function} callback 
+ * @param {Function} callback 
  */
-export function slideDown(eleNode, duration, callback) {
+export function slideDown(eleNode: HTMLElement, duration: number, callback: Function) {
     eleNode.style.display = 'block';
     let to = eleNode.offsetHeight;
     animate(0, to, duration, num => {
@@ -76,9 +76,9 @@ export function slideDown(eleNode, duration, callback) {
  * @export
  * @param {HTMLElement} eleNode 
  * @param {number} duration 
- * @param {function} callback 
+ * @param {Function} callback 
  */
-export function fadeOut(eleNode, duration, callback) {
+export function fadeOut(eleNode: HTMLElement, duration: number, callback?: Function) {
     animate(1, 0, duration, num => {
         eleNode.style.opacity = num;
         if (num == 0) {
@@ -92,9 +92,9 @@ export function fadeOut(eleNode, duration, callback) {
  * @export
  * @param {HTMLElement} eleNode 
  * @param {number} duration 
- * @param {function} callback 
+ * @param {Function} callback 
  */
-export function fadeIn(eleNode, duration, callback) {
+export function fadeIn(eleNode: HTMLElement, duration: number, callback?: Function) {
     animate(0, 1, duration, num => {
         eleNode.style.opacity = num;
         if (num == 1) {
