@@ -11,6 +11,21 @@ interface IOpt {
     words: Array<string>
 }
 
+// 说闲话的delay装饰器
+let delayFree = (function (delay: number) {
+    return function (target: any, propertyName: string, descriptor: TypedPropertyDescriptor<Function>) {
+        let method = descriptor.value;
+        descriptor.value = function (...args) {
+            clearTimeout(this.freeDelayTimer);
+            this.freeDelayTimer = setTimeout(() => {
+                
+            }, delay);
+
+            method.apply(this, args);
+        };
+    };
+})(5000);
+
 class Chuncai {
     //#region private fields
     /**
@@ -21,6 +36,8 @@ class Chuncai {
      * @memberof Chuncai
      */
     private menuOn: boolean = false;
+
+    private freeDelayTimer: number;
 
     /**
      * 渐显文字的dfd
@@ -341,6 +358,7 @@ class Chuncai {
      * 
      * @memberof Chuncai
      */
+    @delayFree
     public show(): void {
         let pos = storage.getStorage();
         if (pos.x !== undefined) {
