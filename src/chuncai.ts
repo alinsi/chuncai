@@ -3,6 +3,7 @@ import * as storage from './lib/storage';
 import * as animate from './lib/animate';
 import * as _ from './lib/utils';
 import { saveStorage } from "./lib/storage";
+import { prependFn } from "./lib/decorators";
 
 import './chuncai.scss';
 
@@ -11,20 +12,12 @@ interface IOpt {
     words: Array<string>
 }
 
-// 说闲话的delay装饰器
-let delayFree = (function (delay: number) {
+let demo = function (fn) {
+    console.log(this);
     return function (target: any, propertyName: string, descriptor: TypedPropertyDescriptor<Function>) {
-        let method = descriptor.value;
-        descriptor.value = function (...args) {
-            clearTimeout(this.freeDelayTimer);
-            this.freeDelayTimer = setTimeout(() => {
-                
-            }, delay);
 
-            method.apply(this, args);
-        };
     };
-})(5000);
+};
 
 class Chuncai {
     //#region private fields
@@ -37,7 +30,14 @@ class Chuncai {
      */
     private menuOn: boolean = false;
 
-    private freeDelayTimer: number;
+    /**
+     * 要循环骚操作的定时器
+     * 
+     * @private
+     * @type {number}
+     * @memberof Chuncai
+     */
+    private freeActionTimer: number;
 
     /**
      * 渐显文字的dfd
@@ -262,6 +262,20 @@ class Chuncai {
         actionDict[itemType] && actionDict[itemType](item);
     }
 
+    private freeAction(rightNow: boolean = false, interval: boolean = true): void {
+        let fn = () => {
+
+        };
+        if (rightNow) {
+            clearInterval(this.freeActionTimer);
+            fn();
+        }
+        if (interval) {
+            clearInterval(this.freeActionTimer);
+            this.freeActionTimer = setInterval(() => this.freeAction(), 5000);
+        }
+    }
+
     /**
      * 渐显文字
      * 
@@ -358,7 +372,7 @@ class Chuncai {
      * 
      * @memberof Chuncai
      */
-    @delayFree
+    @prependFn(Chuncai.prototype.freeAction)
     public show(): void {
         let pos = storage.getStorage();
         if (pos.x !== undefined) {
