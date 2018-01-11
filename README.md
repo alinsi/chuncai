@@ -6,3 +6,4 @@ A lovely Page Wizard, is responsible for selling moe...
 ![image](https://github.com/shalldie/chuncai/blob/Ver.jQuery/img/GIF.gif?raw=true)
 
     先占个坑 =。=
+    新版本开发中，有兴趣可以使用 Ver.jQuery 分支。
