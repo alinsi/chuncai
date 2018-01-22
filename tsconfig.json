@@ -4,6 +4,7 @@
         "module": "commonjs",
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
+        "declaration": true,
         "lib": [
             "dom",
             "es5",
