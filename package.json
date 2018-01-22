@@ -1,8 +1,9 @@
 {
   "name": "chuncai",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lovely Page Wizard, is responsible for selling meng.",
-  "main": "index.js",
+  "main": "dist/chuncai.js",
+  "types": "dist/src/chuncai.d.ts",
   "scripts": {
     "dev": "node build/server.js",
     "build": "node build/build.js"

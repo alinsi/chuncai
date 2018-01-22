@@ -1,6 +1,6 @@
 const key = 'chuncai';
 
-interface IPoint {
+export interface IPoint {
     x: number,
     y: number
 }
@@ -13,7 +13,7 @@ interface IPoint {
  */
 export function getStorage(): IPoint {
     let content = sessionStorage[key] || '{}';
-    return JSON.parse(content);
+    return <IPoint>JSON.parse(content);
 }
 /**
  * 将信息存储到sessionStorage中

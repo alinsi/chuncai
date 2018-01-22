@@ -4,22 +4,12 @@ import * as animate from './lib/animate';
 import * as _ from './lib/utils';
 import { saveStorage } from "./lib/storage";
 import { prependFn } from "./lib/decorators";
+import { IOpt, IMenuItem } from "./Interface";
+
 
 import './chuncai.scss';
 
-interface IOpt {
-    menu: any;
-    words: Array<string>
-}
-
-let demo = function (fn) {
-    console.log(this);
-    return function (target: any, propertyName: string, descriptor: TypedPropertyDescriptor<Function>) {
-
-    };
-};
-
-class Chuncai {
+export class Chuncai {
     //#region private fields
     /**
      * 菜单是否展开
@@ -48,6 +38,13 @@ class Chuncai {
      */
     private freeSayDfd: Deferred = new Deferred().resolve();
 
+    /**
+     * 当前菜单配置
+     * 
+     * @private
+     * @type {IOpt}
+     * @memberof Chuncai
+     */
     private opt: IOpt;
 
     //#endregion
@@ -159,7 +156,7 @@ class Chuncai {
      * @memberof Chuncai
      */
     private fillMenu(subMenus: Array<string> = []): void {
-        let menu = this.opt.menu;
+        let menu: any = this.opt.menu;
         for (let i = 0, len = subMenus.length; i < len; i++) {
             menu = menu[subMenus[i]];
         }
@@ -216,9 +213,10 @@ class Chuncai {
      * @param {string} [cccmd=''] 
      * @memberof Chuncai
      */
+    @prependFn(Chuncai.prototype.freeAction)
     private choseItem(cccmd = '') {
         let cmds = cccmd.split('__');
-        let item = this.opt.menu; // 标签对应的指令项
+        let item: any = this.opt.menu; // 标签对应的指令项
         for (let i = 0, len = cmds.length; i < len; i++) {
             item = item[cmds[i]];
         }
@@ -262,6 +260,14 @@ class Chuncai {
         actionDict[itemType] && actionDict[itemType](item);
     }
 
+    /**
+     * 开始随机行为
+     * 
+     * @private
+     * @param {boolean} [rightNow=false] 立即开始
+     * @param {boolean} [interval=true] 是否循环
+     * @memberof Chuncai
+     */
     private freeAction(rightNow: boolean = false, interval: boolean = true): void {
         let fn = () => {
 

@@ -13,7 +13,8 @@ let plugins = [];
 
 if (ifDev) {
     entry.chuncai.push(`webpack-dev-server/client?http://${serverConfig.domain}:${serverConfig.port}`);
-} else if (false) {
+}
+else {
     plugins.push(new webpack.optimize.UglifyJsPlugin({
         minimize: true,
         sourceMap: false,
