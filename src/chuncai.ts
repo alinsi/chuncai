@@ -186,7 +186,12 @@ export class Chuncai {
         // 菜单
         this.eleNodeMenuBtn
             .addEventListener('click', () => {
-                this.toggleMenu();
+                let dfd = this.toggleMenu();
+                dfd.then(() => {
+                    if (!this.menuOn) {
+                        this.freeAction(true, true);
+                    }
+                });
             });
 
         // 点击菜单项
@@ -269,17 +274,38 @@ export class Chuncai {
      * @memberof Chuncai
      */
     private freeAction(rightNow: boolean = false, interval: boolean = true): void {
-        let fn = () => {
 
+        clearInterval(this.freeActionTimer);
+
+        let dfd: Deferred;
+        if (this.menuOn) {
+            dfd = this.hideMenu();
+        } else {
+            dfd = new Deferred().resolve();
+        }
+
+        let fn = () => {
+            // 随机语言
+            let rnd = _.randomInt(this.opt.words.length);
+            let content = this.opt.words[rnd];
+            this.freeSay(content);
+
+            // 随机表情
+            rnd = _.randomInt(3);
+            let eleNode = this.eleNodeBody;
+            let classStr = eleNode.className;
+            classStr = classStr.replace(/(chuncai-face-0)\d/, `$1${rnd}`);
+            eleNode.className = classStr;
         };
-        if (rightNow) {
-            clearInterval(this.freeActionTimer);
-            fn();
-        }
-        if (interval) {
-            clearInterval(this.freeActionTimer);
-            this.freeActionTimer = setInterval(() => this.freeAction(), 5000);
-        }
+
+        dfd.then(() => {
+            if (rightNow) {
+                fn();
+            }
+            if (interval) {
+                this.freeActionTimer = setInterval(() => fn(), 8000);
+            }
+        });
     }
 
     /**
@@ -310,7 +336,14 @@ export class Chuncai {
      * @memberof Chuncai
      */
     private toggleMenu(): Deferred {
-        return this.menuOn ? this.hideMenu() : this.showMenu();
+        // return this.menuOn ? this.hideMenu() : this.showMenu();
+        let dfd: Deferred;
+        if (this.menuOn) {
+            dfd = this.hideMenu();
+        } else {
+            dfd = this.showMenu();
+        }
+        return dfd;
     }
 
     /**
@@ -320,6 +353,7 @@ export class Chuncai {
      * @returns {Deferred} 
      * @memberof Chuncai
      */
+    @prependFn(Chuncai.prototype.freeAction)
     private showMenu(): Deferred {
         let dfd = new Deferred();
         if (this.menuOn) {
@@ -386,8 +420,9 @@ export class Chuncai {
             this.eleNodeMain.style.top = pos.y + 'px';
         }
         animate.fadeOut(this.eleNodeZhaohuan, 500);
+        this.eleNodeWord.innerHTML = '';
         animate.fadeIn(this.eleNodeMain, 500, () => {
-            this.freeSay('一起组团烧烤秋刀鱼');
+            this.freeSay('啊啦我又来啦～');
         });
     }
 

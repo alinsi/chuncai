@@ -10,7 +10,7 @@ export function prependFn(fn: Function) {
         let method = descriptor.value;
         descriptor.value = function (...args) {
             fn.call(this);
-            method.apply(this, args);
+            return method.apply(this, args);
         };
     }
 }
