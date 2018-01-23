@@ -43,5 +43,6 @@ jspm_packages
 /.eslintignore
 /.eslintrc.json
 /index.html
+/postcss.config.js
 /tsconfig.json
 /tslint.json
