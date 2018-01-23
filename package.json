@@ -1,6 +1,6 @@
 {
   "name": "chuncai",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A lovely Page Wizard, is responsible for selling meng.",
   "main": "dist/chuncai.js",
   "types": "dist/src/chuncai.d.ts",
