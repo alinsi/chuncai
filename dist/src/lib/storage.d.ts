@@ -1,7 +1,4 @@
-export interface IPoint {
-    x: number;
-    y: number;
-}
+import { IPoint } from "../Interface";
 /**
  * 获取sessionStorage中存储的信息
  *

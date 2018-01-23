@@ -1,3 +1,20 @@
+/**
+ * 坐标
+ * 
+ * @export
+ * @interface IPoint
+ */
+export interface IPoint {
+    x: number,
+    y: number
+}
+
+/**
+ * 初始化参数
+ * 
+ * @export
+ * @interface IOpt
+ */
 export interface IOpt {
     /**
      * 菜单

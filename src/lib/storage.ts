@@ -1,9 +1,6 @@
-const key = 'chuncai';
+import { IPoint } from "../Interface";
 
-export interface IPoint {
-    x: number,
-    y: number
-}
+const key = 'chuncai';
 
 /**
  * 获取sessionStorage中存储的信息
