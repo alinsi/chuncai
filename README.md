@@ -14,12 +14,13 @@ A lovely Page Wizard, is responsible for selling moe...
 在 **es module** 中拿到chuncai对象(**commonjs和window** 中需要从 **default** 属性上获取)，调用 **init** 方法初始化。
 **chuncai.init(opt:IOpt)**
 
-* **words** 是一个数组: *Array<string>*，存放春菜闲暇时候说的话。
-* **menu** 是菜单: *IOpt*，其中：  
-1. *object* 表示子菜单
-2. key *$title* 是在展开子菜单的时候，春菜要说的话
-3. *string* 表示点击后要说的话
-4. *Function* 是点击后要执行的方法
+* **words** 是一个数组: **Array<string>**，存放春菜闲暇时候说的话。
+* **menu** 是菜单: *IOpt*，其中：
+
+1. **object** 表示子菜单
+2. key **$title** 是在展开子菜单的时候，春菜要说的话
+3. **string** 表示点击后要说的话
+4. **Function** 是点击后要执行的方法
 
 可查看如下 example 和 interface 。
 
