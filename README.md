@@ -5,6 +5,8 @@ A lovely Page Wizard, is responsible for selling moe...
 
 ![image](https://raw.githubusercontent.com/shalldie/chuncai/master/GIF.gif)
 
+[查看demo](https://shalldie.github.io/demos/chuncai/index.html)
+
 ## Installation
 
     npm install chuncai
