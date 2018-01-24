@@ -9,6 +9,11 @@ import { IOpt, IMenuItem } from "./Interface";
 
 import './chuncai.scss';
 
+declare function require(filePath: string): string;
+
+const mainContent = require('./tpl/main.html');
+const tagContent = require('./tpl/tag.html');
+
 export class Chuncai {
     //#region private fields
     /**
@@ -127,22 +132,10 @@ export class Chuncai {
     private fillDom(): void {
         let wrap = document.createElement('div');
 
-        let tagContent = '<a id="chuncai_zhaohuan" class="chuncai-zhaohuan" href="javascript:;">召唤春菜</a>';
         wrap.innerHTML = tagContent;
         let tagNode = wrap.children[0];
         document.body.appendChild(tagNode);
 
-        let mainContent = `
-<div id="chuncai_main" class="chuncai-main">
-    <div id="chuncai_body" class="chuncai-face chuncai-face-00">
-        <div class="chuncai-face-eye"></div>
-    </div>
-    <div class="chuncai-chat">
-        <div id="chuncai_word" class="chuncai-word"></div>
-        <div class="chuncai-menu"></div>
-        <div class="chuncai-menu-btn">menu</div>
-    </div>
-</div>`;
         wrap.innerHTML = mainContent;
         let mainNode = wrap.children[0];
         document.body.appendChild(mainNode);

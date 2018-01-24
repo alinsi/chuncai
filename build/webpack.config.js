@@ -57,6 +57,9 @@ module.exports = {
             exclude: /node_modules/,
             use: ['babel-loader']
         }, {
+            test: /\.html$/,
+            use: ['html-loader']
+        }, {
             test: /\.scss$/,
             use: ['style-loader',
                 {
