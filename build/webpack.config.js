@@ -58,7 +58,12 @@ module.exports = {
             use: ['babel-loader']
         }, {
             test: /\.html$/,
-            use: ['html-loader']
+            use: [{
+                loader: 'html-loader',
+                options: {
+                    minimize: true
+                }
+            }]
         }, {
             test: /\.scss$/,
             use: ['style-loader',
