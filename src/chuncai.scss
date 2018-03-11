@@ -7,7 +7,7 @@
     width: 85px;
     height: 152px;
     overflow: visible;
-    font-family: "Microsoft Yahei", Helvetica, Arial, sans-serif;
+    font-family: 'Microsoft Yahei', Helvetica, Arial, sans-serif;
 
     > .chuncai-face {
         position: absolute;
@@ -64,7 +64,7 @@
             right: 3px;
             border-bottom: 5px solid transparent;
             border-right: 14px solid #ffe;
-            content: "";
+            content: '';
         }
         &::before {
             bottom: -5px;
