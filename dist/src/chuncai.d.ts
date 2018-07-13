@@ -87,7 +87,7 @@ export declare class Chuncai {
      * @private
      * @memberof Chuncai
      */
-    private fillDom();
+    private fillDom;
     /**
      * 填充菜单
      *
@@ -95,14 +95,14 @@ export declare class Chuncai {
      * @param {Array<string>} [subMenus=[]]
      * @memberof Chuncai
      */
-    private fillMenu(subMenus?);
+    private fillMenu;
     /**
      * 绑定事件
      *
      * @private
      * @memberof Chuncai
      */
-    private evtSet();
+    private evtSet;
     /**
      * 选择某一项
      *
@@ -110,7 +110,7 @@ export declare class Chuncai {
      * @param {string} [cccmd='']
      * @memberof Chuncai
      */
-    private choseItem(cccmd?);
+    private choseItem;
     /**
      * 开始随机行为
      *
@@ -119,7 +119,7 @@ export declare class Chuncai {
      * @param {boolean} [interval=true] 是否循环
      * @memberof Chuncai
      */
-    private freeAction(rightNow?, interval?);
+    private freeAction;
     /**
      * 渐显文字
      *
@@ -127,7 +127,7 @@ export declare class Chuncai {
      * @param {string} content
      * @memberof Chuncai
      */
-    private freeSay(content);
+    private freeSay;
     /**
      * 显示/隐藏 菜单
      *
@@ -135,7 +135,7 @@ export declare class Chuncai {
      * @returns {Deferred}
      * @memberof Chuncai
      */
-    private toggleMenu();
+    private toggleMenu;
     /**
      * 显示菜单
      *
@@ -143,7 +143,7 @@ export declare class Chuncai {
      * @returns {Deferred}
      * @memberof Chuncai
      */
-    private showMenu();
+    private showMenu;
     /**
      * 隐藏菜单
      *
@@ -151,7 +151,7 @@ export declare class Chuncai {
      * @returns {Deferred}
      * @memberof Chuncai
      */
-    private hideMenu();
+    private hideMenu;
     /**
      * 初始化
      *

@@ -39,6 +39,7 @@ module.exports = {
         filename: '[name].js',
         publicPath: '/dist/',
         library: 'chuncai',
+        libraryExport: 'default',
         libraryTarget: 'umd'
     },
     //插件项

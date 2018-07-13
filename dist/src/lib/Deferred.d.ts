@@ -38,7 +38,7 @@ export default class Deferred {
      * @returns {void}
      * @memberof Deferred
      */
-    private next();
+    private next;
     /**
      * 添加到队列
      *
