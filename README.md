@@ -18,7 +18,7 @@ A lovely Page Wizard, is responsible for selling moe...
 
 ## Usage & Example
 
-在 **es module** 中拿到 chuncai 对象(**commonjs 和 window** 中需要从 **default** 属性上获取)，调用 **init** 方法初始化。
+调用 **init** 方法初始化。
 **chuncai.init(opt:IOpt)**
 
 -   **words** 是一个数组: **Array<string>**，存放春菜闲暇时候说的话。
@@ -35,9 +35,9 @@ A lovely Page Wizard, is responsible for selling moe...
 // es module、typescript
 import chuncai from 'chuncai';
 // commonjs
-//let chuncai = require('chuncai').default;
+//let chuncai = require('chuncai');
 // window
-//var chuncai = window['chuncai'].default;
+//var chuncai = window['chuncai'];
 
 const opt = {
     menu: {
