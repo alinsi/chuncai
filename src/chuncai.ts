@@ -18,7 +18,7 @@ export class Chuncai {
     //#region private fields
     /**
      * 菜单是否展开
-     * 
+     *
      * @private
      * @type {boolean}
      * @memberof Chuncai
@@ -27,7 +27,7 @@ export class Chuncai {
 
     /**
      * 要循环骚操作的定时器
-     * 
+     *
      * @private
      * @type {number}
      * @memberof Chuncai
@@ -36,7 +36,7 @@ export class Chuncai {
 
     /**
      * 渐显文字的dfd
-     * 
+     *
      * @private
      * @type {Deferred}
      * @memberof Chuncai
@@ -45,7 +45,7 @@ export class Chuncai {
 
     /**
      * 当前菜单配置
-     * 
+     *
      * @private
      * @type {IOpt}
      * @memberof Chuncai
@@ -57,7 +57,7 @@ export class Chuncai {
     //#region private get fields
     /**
      * 春菜文字容器
-     * 
+     *
      * @readonly
      * @private
      * @memberof Chuncai
@@ -68,7 +68,7 @@ export class Chuncai {
 
     /**
      * 整个春菜
-     * 
+     *
      * @readonly
      * @private
      * @memberof Chuncai
@@ -79,7 +79,7 @@ export class Chuncai {
 
     /**
      * 春菜身体部分
-     * 
+     *
      * @readonly
      * @private
      * @memberof Chuncai
@@ -90,7 +90,7 @@ export class Chuncai {
 
     /**
      * 菜单容器
-     * 
+     *
      * @readonly
      * @private
      * @memberof Chuncai
@@ -101,7 +101,7 @@ export class Chuncai {
 
     /**
      * 菜单toggle按钮
-     * 
+     *
      * @readonly
      * @private
      * @memberof Chuncai
@@ -112,7 +112,7 @@ export class Chuncai {
 
     /**
      * 召唤按钮
-     * 
+     *
      * @readonly
      * @private
      * @memberof Chuncai
@@ -125,7 +125,7 @@ export class Chuncai {
     //#region private methods
     /**
      * 填充dom
-     * 
+     *
      * @private
      * @memberof Chuncai
      */
@@ -143,9 +143,9 @@ export class Chuncai {
 
     /**
      * 填充菜单
-     * 
+     *
      * @private
-     * @param {Array<string>} [subMenus=[]] 
+     * @param {Array<string>} [subMenus=[]]
      * @memberof Chuncai
      */
     private fillMenu(subMenus: Array<string> = []): void {
@@ -168,7 +168,7 @@ export class Chuncai {
 
     /**
      * 绑定事件
-     * 
+     *
      * @private
      * @memberof Chuncai
      */
@@ -206,9 +206,9 @@ export class Chuncai {
 
     /**
      * 选择某一项
-     * 
+     *
      * @private
-     * @param {string} [cccmd=''] 
+     * @param {string} [cccmd='']
      * @memberof Chuncai
      */
     @prependFn(Chuncai.prototype.freeAction)
@@ -222,8 +222,8 @@ export class Chuncai {
         let actionDict = {
             /**
              * 字符串则直接输出
-             * 
-             * @param {string} content 
+             *
+             * @param {string} content
              */
             string: content => {
                 this.freeSay(content);
@@ -234,13 +234,13 @@ export class Chuncai {
             },
             /**
              * 方法直接调用
-             * 
-             * @param {function} func 
+             *
+             * @param {function} func
              */
             function: func => func(),
             /**
              * 菜单则填充
-             * 
+             *
              */
             object: sender => {
                 this.hideMenu()
@@ -260,7 +260,7 @@ export class Chuncai {
 
     /**
      * 开始随机行为
-     * 
+     *
      * @private
      * @param {boolean} [rightNow=false] 立即开始
      * @param {boolean} [interval=true] 是否循环
@@ -270,14 +270,12 @@ export class Chuncai {
 
         clearInterval(this.freeActionTimer);
 
-        let dfd: Deferred;
-        if (this.menuOn) {
-            dfd = this.hideMenu();
-        } else {
-            dfd = new Deferred().resolve();
-        }
-
         let fn = () => {
+            // 关闭menu
+            if (this.menuOn) {
+                this.hideMenu();
+            }
+
             // 随机语言
             let rnd = _.randomInt(this.opt.words.length);
             let content = this.opt.words[rnd];
@@ -291,21 +289,19 @@ export class Chuncai {
             eleNode.className = classStr;
         };
 
-        dfd.then(() => {
-            if (rightNow) {
-                fn();
-            }
-            if (interval) {
-                this.freeActionTimer = setInterval(() => fn(), 8000);
-            }
-        });
+        if (rightNow) {
+            fn();
+        }
+        if (interval) {
+            this.freeActionTimer = setInterval(() => fn(), 8000);
+        }
     }
 
     /**
      * 渐显文字
-     * 
+     *
      * @private
-     * @param {string} content 
+     * @param {string} content
      * @memberof Chuncai
      */
     private freeSay(content: string): void {
@@ -323,9 +319,9 @@ export class Chuncai {
 
     /**
      * 显示/隐藏 菜单
-     * 
+     *
      * @private
-     * @returns {Deferred} 
+     * @returns {Deferred}
      * @memberof Chuncai
      */
     private toggleMenu(): Deferred {
@@ -341,9 +337,9 @@ export class Chuncai {
 
     /**
      * 显示菜单
-     * 
+     *
      * @private
-     * @returns {Deferred} 
+     * @returns {Deferred}
      * @memberof Chuncai
      */
     @prependFn(Chuncai.prototype.freeAction)
@@ -363,9 +359,9 @@ export class Chuncai {
 
     /**
      * 隐藏菜单
-     * 
+     *
      * @private
-     * @returns {Deferred} 
+     * @returns {Deferred}
      * @memberof Chuncai
      */
     private hideMenu(): Deferred {
@@ -388,8 +384,8 @@ export class Chuncai {
     //#region public methods
     /**
      * 初始化
-     * 
-     * @param {IOpt} opt 
+     *
+     * @param {IOpt} opt
      * @memberof Chuncai
      */
     public init(opt: IOpt): void {
@@ -402,7 +398,7 @@ export class Chuncai {
 
     /**
      * 显示春菜
-     * 
+     *
      * @memberof Chuncai
      */
     @prependFn(Chuncai.prototype.freeAction)
@@ -421,7 +417,7 @@ export class Chuncai {
 
     /**
      * 隐藏
-     * 
+     *
      * @memberof Chuncai
      */
     public hide(): void {
